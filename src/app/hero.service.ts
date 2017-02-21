@@ -26,11 +26,10 @@ export class HeroService {
       .catch(this.handleError);
   }
 
-  update(hero: Hero) {
+  update(hero: Hero): Promise<void> {
     const url = this.heroesUrl + '/' + hero.id;
     return this.http.put(url, JSON.stringify(hero), this.headers)
       .toPromise()
-      .then(() => hero)
       .catch(this.handleError);
   }
 
@@ -40,6 +39,13 @@ export class HeroService {
     return this.http.post(this.heroesUrl, JSON.stringify(hero), this.headers)
       .toPromise()
       .then(response => response.json().data as Hero)
+      .catch(this.handleError);
+  }
+
+  delete(hero: Hero): Promise<void> {
+    const url = this.heroesUrl + '/' + hero.id;
+    return this.http.delete(url)
+      .toPromise()
       .catch(this.handleError);
   }
 
